@@ -8,12 +8,17 @@ namespace CSharpDataStructures
 
         public SearchTree()
         {
-            root = CreateNode();
+            root = CreateKeyNodeNode();
         }
 
-        public static Node CreateNode()
+        public static KeyNode CreateKeyNodeNode()
         {
-            return new Node();
+            return new KeyNode();
+        }
+
+        public static DataNode CreateDataNode(int data)
+        {
+            return new DataNode(data);
         }
 
         public bool IsEmpty()

@@ -14,12 +14,12 @@ namespace Tests
         }
 
         [Test]
-        public void CreateNodeTest()
+        public void CreateKeyNodeTest()
         {
-            Node node = new Node();
+            KeyNode node = new KeyNode();
             node.Key = 1;
-            node.Left = new Node();
-            node.Right = new Node();
+            node.Left = new KeyNode();
+            node.Right = new KeyNode();
 
             Assert.AreEqual(1, node.Key);
             Assert.AreNotEqual(null, node.Left);
@@ -29,7 +29,7 @@ namespace Tests
         [Test]
         public void CreateSearchTreeNodeTest()
         {
-            Node node = SearchTree.CreateNode();
+            Node node = SearchTree.CreateKeyNodeNode();
             Assert.AreEqual(null, node.Left);
         }
 
@@ -37,6 +37,14 @@ namespace Tests
         public void CreateEmptyTreeTest()
         {
             Assert.IsTrue(searchTree.IsEmpty());
+        }
+
+        [Test]
+        public void CreateDataNodeTest()
+        {
+            DataNode dataNode = SearchTree.CreateDataNode(1);
+
+            Assert.AreEqual(1, dataNode.Data);
         }
     }
 }
