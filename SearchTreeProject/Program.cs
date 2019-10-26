@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SearchTreeProject
+namespace CSharpDataStructures
 {
     class Program
     {
