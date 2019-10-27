@@ -1,6 +1,6 @@
 ﻿namespace CSharpDataStructures
 {
-    public class DataNode
+    public class DataNode : Node
     {
         public int Data;
 

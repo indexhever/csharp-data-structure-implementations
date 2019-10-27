@@ -3,7 +3,7 @@ using CSharpDataStructures;
 
 namespace Tests
 {
-    public class SearchTreeTest
+    public class SearchTreeCreationTest
     {
         SearchTree searchTree;
 
@@ -30,6 +30,7 @@ namespace Tests
         public void CreateSearchTreeNodeTest()
         {
             Node node = SearchTree.CreateKeyNodeNode();
+
             Assert.AreEqual(null, node.Left);
         }
 
