@@ -38,6 +38,11 @@ namespace CSharpDataStructures
             return InsertKeyAndDataIntoTree(newKey, newData, root);
         }
 
+        public DataNode Find(int searchedKey)
+        {
+            return FindDataWithKeyOnTree(searchedKey, root);
+        }
+
         public int InsertKeyAndDataIntoTree(int newKey, int newData, Node tree)
         {
             if (IsTreeEmpty(tree))
@@ -52,7 +57,7 @@ namespace CSharpDataStructures
 
         private int TryInsertKeyAndDataOnBestPositionOfTree(int newKey, int newData, Node tree)
         {
-            Node tempNode = FindBestNodeToAddKeyOnTree(newKey, tree);
+            Node tempNode = FindNodeOfKeyOnTree(newKey, tree);
 
             // Not allowed to add key which is alread inside tree
             if (tempNode.Key == newKey)
@@ -63,40 +68,6 @@ namespace CSharpDataStructures
             SwitchLeavesOnNodeAccordingToNewKey(oldLeaf, newLeaf, tempNode, newKey);
 
             return 0;
-        }
-
-        public bool IsEmpty()
-        {
-            return IsTreeEmpty(root);
-        }
-
-        private bool IsTreeEmpty(Node tree)
-        {
-            return tree.Left == null;
-        }
-
-        private Node FindBestNodeToAddKeyOnTree(int newKey, Node tree)
-        {
-            Node tempNode = tree;
-            while (!IsLeafNode(tempNode))
-            {
-                tempNode = FindNewDirectionOnTreeWithKey(tempNode, newKey);
-            }
-            return tempNode;
-        }
-
-        private bool IsLeafNode(Node tempNode)
-        {
-            return tempNode.Right == null;
-        }
-
-        private Node FindNewDirectionOnTreeWithKey(Node node, int searchKey)
-        {
-            if (searchKey < node.Key)
-                node = node.Left;
-            else
-                node = node.Right;
-            return node;
         }
 
         private Node CreateNewLeafWithKeyAndData(int newKey, int newData)
@@ -130,6 +101,52 @@ namespace CSharpDataStructures
                 node.Left = newLeaf;
                 node.Right = oldLeaf;
             }
+        }
+
+        private DataNode FindDataWithKeyOnTree(int queryKey, Node tree)
+        {
+            if (IsTreeEmpty(tree))
+                return null;
+
+            Node tempNode = FindNodeOfKeyOnTree(queryKey, tree);
+            if (tempNode.Key == queryKey)
+                return tempNode.Left as DataNode;
+
+            return null;
+        }
+
+        public bool IsEmpty()
+        {
+            return IsTreeEmpty(root);
+        }
+
+        private bool IsTreeEmpty(Node tree)
+        {
+            return tree.Left == null;
+        }
+
+        private bool IsLeafNode(Node tempNode)
+        {
+            return tempNode.Right == null;
+        }
+
+        private Node FindNodeOfKeyOnTree(int queryKey, Node tree)
+        {
+            Node tempNode = tree;
+            while (!IsLeafNode(tempNode))
+            {
+                tempNode = FindNewDirectionOnTreeWithKey(tempNode, queryKey);
+            }
+            return tempNode;
+        }
+
+        private Node FindNewDirectionOnTreeWithKey(Node node, int searchKey)
+        {
+            if (searchKey < node.Key)
+                node = node.Left;
+            else
+                node = node.Right;
+            return node;
         }
     }
 }
