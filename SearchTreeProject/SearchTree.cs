@@ -43,6 +43,11 @@ namespace CSharpDataStructures
             return FindDataWithKeyOnTree(searchedKey, root);
         }
 
+        public DataNode Delete(int queryKey)
+        {
+            return DeleteKeyOnTree(queryKey, root);
+        }
+
         public int InsertKeyAndDataIntoTree(int newKey, int newData, Node tree)
         {
             if (IsTreeEmpty(tree))
@@ -113,6 +118,53 @@ namespace CSharpDataStructures
                 return tempNode.Left as DataNode;
 
             return null;
+        }
+
+        private DataNode DeleteKeyOnTree(int keyToDelete, Node tree)
+        {
+            if (IsTreeEmpty(tree))
+                return null;
+
+            DataNode deletedData;
+            Node tempNode = null, upperNode = null, otherNode = null;            
+
+            if (IsLeafNode(tree))
+            {
+                if (tree.Key != keyToDelete)
+                    return null;
+
+                deletedData = tree.Left as DataNode;
+                tree.Left = null;
+                return deletedData;
+            }
+
+            tempNode = tree;
+            while (!IsLeafNode(tempNode))
+            {
+                upperNode = tempNode;
+                if(keyToDelete < tempNode.Key)
+                {
+                    tempNode = upperNode.Left;
+                    otherNode = upperNode.Right;
+                }
+                else
+                {
+                    tempNode = upperNode.Right;
+                    otherNode = upperNode.Left;
+                }
+            }
+
+            if (tempNode.Key != keyToDelete)
+                return null;
+
+            upperNode.Key = otherNode.Key;
+            upperNode.Left = otherNode.Left;
+            upperNode.Right = otherNode.Right;
+            deletedData = tempNode.Left as DataNode;
+            // TODO: Implement stack of free nodes to be reused after deleting one
+            //ReturnNode(tempNode);
+            //ReturnNode(otherNode);
+            return deletedData;
         }
 
         public bool IsEmpty()
