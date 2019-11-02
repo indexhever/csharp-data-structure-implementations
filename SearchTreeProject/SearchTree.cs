@@ -125,24 +125,27 @@ namespace CSharpDataStructures
             if (IsTreeEmpty(tree))
                 return null;
 
-            DataNode deletedData;
-            Node tempNode = null, upperNode = null, otherNode = null;            
-
             if (IsLeafNode(tree))
             {
                 if (tree.Key != keyToDelete)
                     return null;
 
-                deletedData = tree.Left as DataNode;
+                DataNode deletedData = tree.Left as DataNode;
                 tree.Left = null;
                 return deletedData;
             }
 
+            return DeleteKeyOnTreeAndOrganizeStructure(keyToDelete, tree);
+        }
+
+        private DataNode DeleteKeyOnTreeAndOrganizeStructure(int keyToDelete, Node tree)
+        {
+            Node tempNode = null, upperNode = null, otherNode = null;
             tempNode = tree;
             while (!IsLeafNode(tempNode))
             {
                 upperNode = tempNode;
-                if(keyToDelete < tempNode.Key)
+                if (keyToDelete < tempNode.Key)
                 {
                     tempNode = upperNode.Left;
                     otherNode = upperNode.Right;
@@ -160,11 +163,10 @@ namespace CSharpDataStructures
             upperNode.Key = otherNode.Key;
             upperNode.Left = otherNode.Left;
             upperNode.Right = otherNode.Right;
-            deletedData = tempNode.Left as DataNode;
             // TODO: Implement stack of free nodes to be reused after deleting one
             //ReturnNode(tempNode);
             //ReturnNode(otherNode);
-            return deletedData;
+            return tempNode.Left as DataNode;
         }
 
         public bool IsEmpty()
