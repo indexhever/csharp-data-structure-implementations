@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using CSharpDataStructures;
 
-namespace Tests
+namespace Tests.Concretes
 {
     public class SearchTreeFindTest
     {
