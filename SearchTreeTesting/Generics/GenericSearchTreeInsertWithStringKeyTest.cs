@@ -3,28 +3,28 @@ using CSharpDataStructures;
 
 namespace Tests.Generics
 {
-    class GenericSearchTreeInsertTest
+    class GenericSearchTreeInsertWithStringKeyTest
     {
-        SearchTree<int, int> searchTree;
+        SearchTree<string, int> searchTree;
 
         [SetUp]
         public void Setup()
         {
-            searchTree = new SearchTree<int, int>();
+            searchTree = new SearchTree<string, int>();
         }
 
         [Test]
         public void InsertOneNodeResultTreeIsLeafTest()
         {
-            int newKey = 1;
+            string newKey = "alan";
             int newData = 4;
 
             int isDataInsertedCorrectly = searchTree.Insert(newKey, newData);
-            Node<int> treeRoot = searchTree.Tree;
-            DataNode<int, int> treeData = treeRoot.Left as DataNode<int, int>;
+            Node<string> treeRoot = searchTree.Tree;
+            DataNode<string, int> treeData = treeRoot.Left as DataNode<string, int>;
 
             Assert.AreEqual(0, isDataInsertedCorrectly);
-            Assert.AreEqual(1, treeRoot.Key);
+            Assert.AreEqual(newKey, treeRoot.Key);
             Assert.NotNull(treeRoot.Left);
             Assert.Null(treeRoot.Right);
             Assert.AreEqual(newData, treeData.Data);
@@ -35,18 +35,18 @@ namespace Tests.Generics
         [Test]
         public void InsertTwoNodeWithIncreasingKeysResultTreeWithTwoLeavesTest()
         {
-            int firstNewKey = 1;
+            string firstNewKey = "alan";
             int firstNewData = 4;
-            int secondNewKey = 2;
+            string secondNewKey = "jordan";
             int secondNewData = 2;
 
             int isFirstDataInsertedCorrectly = searchTree.Insert(firstNewKey, firstNewData);
             int isSecondDataInsertedCorrectly = searchTree.Insert(secondNewKey, secondNewData);
-            Node<int> treeRoot = searchTree.Tree;
-            Node<int> leftLeaf = treeRoot.Left;
-            Node<int> rightLeaf = treeRoot.Right;
-            DataNode<int, int> leftLeafDataNode = leftLeaf.Left as DataNode<int, int>;
-            DataNode<int, int> rightLeafDataNode = rightLeaf.Left as DataNode<int, int>;
+            Node<string> treeRoot = searchTree.Tree;
+            Node<string> leftLeaf = treeRoot.Left;
+            Node<string> rightLeaf = treeRoot.Right;
+            DataNode<string, int> leftLeafDataNode = leftLeaf.Left as DataNode<string, int>;
+            DataNode<string, int> rightLeafDataNode = rightLeaf.Left as DataNode<string, int>;
 
             Assert.Zero(isFirstDataInsertedCorrectly);
             Assert.Zero(isSecondDataInsertedCorrectly);
@@ -60,18 +60,18 @@ namespace Tests.Generics
         [Test]
         public void InsertTwoNodeWithDecreasingKeysResultTreeWithTwoLeavesTest()
         {
-            int firstNewKey = 2;
+            string firstNewKey = "jordan";
             int firstNewData = 2;
-            int secondNewKey = 1;
+            string secondNewKey = "alan";
             int secondNewData = 4;
 
             int isFirstDataInsertedCorrectly = searchTree.Insert(firstNewKey, firstNewData);
             int isSecondDataInsertedCorrectly = searchTree.Insert(secondNewKey, secondNewData);
-            Node<int> treeRoot = searchTree.Tree;
-            Node<int> leftLeaf = treeRoot.Left;
-            Node<int> rightLeaf = treeRoot.Right;
-            DataNode<int, int> leftLeafDataNode = leftLeaf.Left as DataNode<int, int>;
-            DataNode<int, int> rightLeafDataNode = rightLeaf.Left as DataNode<int, int>;
+            Node<string> treeRoot = searchTree.Tree;
+            Node<string> leftLeaf = treeRoot.Left;
+            Node<string> rightLeaf = treeRoot.Right;
+            DataNode<string, int> leftLeafDataNode = leftLeaf.Left as DataNode<string, int>;
+            DataNode<string, int> rightLeafDataNode = rightLeaf.Left as DataNode<string, int>;
 
             Assert.Zero(isFirstDataInsertedCorrectly);
             Assert.Zero(isSecondDataInsertedCorrectly);
@@ -85,15 +85,15 @@ namespace Tests.Generics
         [Test]
         public void InsertKeyWhichExistsOnTreeResultZeroTest()
         {
-            int firstNewKey = 1;
+            string firstNewKey = "alan";
             int firstNewData = 4;
-            int secondNewKey = 1;
+            string secondNewKey = "alan";
             int secondNewData = 2;
 
             int isFirstDataInsertedCorrectly = searchTree.Insert(firstNewKey, firstNewData);
             int isSecondDataInsertedCorrectly = searchTree.Insert(secondNewKey, secondNewData);
-            Node<int> treeRoot = searchTree.Tree;
-            DataNode<int, int> leftDataNode = treeRoot.Left as DataNode<int, int>;
+            Node<string> treeRoot = searchTree.Tree;
+            DataNode<string, int> leftDataNode = treeRoot.Left as DataNode<string, int>;
 
             Assert.Zero(isFirstDataInsertedCorrectly);
             Assert.AreEqual(-1, isSecondDataInsertedCorrectly);
