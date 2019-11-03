@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using CSharpDataStructures;
-using System.Collections.Generic;
 using System;
 
 namespace Tests.Generics

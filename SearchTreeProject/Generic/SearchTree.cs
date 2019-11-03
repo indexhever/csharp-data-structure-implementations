@@ -42,6 +42,11 @@ namespace CSharpDataStructures
             return InsertKeyAndDataIntoTree(newKey, newData, root);
         }
 
+        public DataNode<TKey, TData> Find(TKey queryKey)
+        {
+            return FindDataWithKeyOnTree(queryKey, root);
+        }
+
         private int InsertKeyAndDataIntoTree(TKey newKey, TData newData, Node<TKey> tree)
         {
             if (IsTreeEmpty(tree))
@@ -53,6 +58,18 @@ namespace CSharpDataStructures
             }
 
             return TryInsertKeyAndDataOnBestPositionOfTree(newKey, newData, tree);
+        }
+
+        private DataNode<TKey, TData> FindDataWithKeyOnTree(TKey queryKey, Node<TKey> tree)
+        {
+            if (IsTreeEmpty(tree))
+                return null;
+
+            Node<TKey> tempNode = FindNodeOfKeyOnTree(queryKey, tree);
+            if (AreKeysEqual(tempNode.Key, queryKey))
+                return tempNode.Left as DataNode<TKey, TData>;
+
+            return null;
         }
 
         private int TryInsertKeyAndDataOnBestPositionOfTree(TKey newKey, TData newData, Node<TKey> tree)
