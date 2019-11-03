@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CSharpDataStructures
 {
-    public class SearchTree<TKey, TData>
+    public class SearchTree<TKey, TData> where TKey : IComparable<TKey>
     {
         #region Fields
         private Node<TKey> root;
@@ -59,7 +60,7 @@ namespace CSharpDataStructures
             Node<TKey> tempNode = FindNodeOfKeyOnTree(newKey, tree);
 
             // Not allowed to add key which is alread inside tree
-            if (tempNode.Key.Equals(newKey))
+            if (AreKeysEqual(tempNode.Key, newKey))
                 return -1;
 
             Node<TKey> oldLeaf = CreateOldLeafFromNode(tempNode);
@@ -81,7 +82,7 @@ namespace CSharpDataStructures
 
         private Node<TKey> FindNewDirectionOnTreeWithKey(Node<TKey> node, TKey queryKey)
         {
-            if (comparer.Compare(queryKey, node.Key) < 0)
+            if (CompareKeys(queryKey, node.Key) < 0)
                 node = node.Left;
             else
                 node = node.Right;
@@ -108,7 +109,7 @@ namespace CSharpDataStructures
 
         private void SwitchLeavesOnNodeAccordingToNewKey(Node<TKey> oldLeaf, Node<TKey> newLeaf, Node<TKey> node, TKey newKey)
         {
-            int order = comparer.Compare(node.Key, newKey);
+            int order = CompareKeys(node.Key, newKey);
             if (order < 0)
             {
                 node.Left = oldLeaf;
@@ -135,6 +136,16 @@ namespace CSharpDataStructures
         private bool IsLeafNode(Node<TKey> tempNode)
         {
             return tempNode.Right == null;
+        }
+
+        private bool AreKeysEqual(TKey firstKey, TKey secondKey)
+        {
+            return CompareKeys(firstKey, secondKey) == 0;
+        }
+
+        private int CompareKeys(TKey firstKey, TKey secondKey)
+        {
+            return comparer.Compare(firstKey, secondKey);
         }
     }
 }
