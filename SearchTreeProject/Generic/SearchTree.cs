@@ -47,6 +47,11 @@ namespace CSharpDataStructures
             return FindDataWithKeyOnTree(queryKey, root);
         }
 
+        public DataNode<TKey, TData> Delete(TKey queryKey)
+        {
+            return DeleteKeyOnTree(queryKey, root);
+        }
+
         private int InsertKeyAndDataIntoTree(TKey newKey, TData newData, Node<TKey> tree)
         {
             if (IsTreeEmpty(tree))
@@ -72,6 +77,24 @@ namespace CSharpDataStructures
             return null;
         }
 
+        private DataNode<TKey, TData> DeleteKeyOnTree(TKey keyToDelete, Node<TKey> tree)
+        {
+            if (IsTreeEmpty(tree))
+                return null;
+
+            if (IsLeafNode(tree))
+            {
+                if (!AreKeysEqual(tree.Key, keyToDelete))
+                    return null;
+
+                DataNode<TKey, TData> deletedData = tree.Left as DataNode<TKey, TData>;
+                tree.Left = null;
+                return deletedData;
+            }
+
+            return DeleteKeyOnTreeAndOrganizeStructure(keyToDelete, tree);
+        }
+
         private int TryInsertKeyAndDataOnBestPositionOfTree(TKey newKey, TData newData, Node<TKey> tree)
         {
             Node<TKey> tempNode = FindNodeOfKeyOnTree(newKey, tree);
@@ -95,6 +118,37 @@ namespace CSharpDataStructures
                 tempNode = FindNewDirectionOnTreeWithKey(tempNode, queryKey);
             }
             return tempNode;
+        }
+
+        private DataNode<TKey, TData> DeleteKeyOnTreeAndOrganizeStructure(TKey keyToDelete, Node<TKey> tree)
+        {
+            Node<TKey> tempNode = null, upperNode = null, otherNode = null;
+            tempNode = tree;
+            while (!IsLeafNode(tempNode))
+            {
+                upperNode = tempNode;
+                if (CompareKeys(keyToDelete, tempNode.Key) < 0)
+                {
+                    tempNode = upperNode.Left;
+                    otherNode = upperNode.Right;
+                }
+                else
+                {
+                    tempNode = upperNode.Right;
+                    otherNode = upperNode.Left;
+                }
+            }
+
+            if (!AreKeysEqual(tempNode.Key, keyToDelete))
+                return null;
+
+            upperNode.Key = otherNode.Key;
+            upperNode.Left = otherNode.Left;
+            upperNode.Right = otherNode.Right;
+            // TODO: Implement stack of free nodes to be reused after deleting one
+            //ReturnNode(tempNode);
+            //ReturnNode(otherNode);
+            return tempNode.Left as DataNode<TKey, TData>;
         }
 
         private Node<TKey> FindNewDirectionOnTreeWithKey(Node<TKey> node, TKey queryKey)

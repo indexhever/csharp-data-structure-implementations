@@ -3,7 +3,7 @@ using CSharpDataStructures;
 
 namespace Tests.Concretes
 {
-    public class SearchTreeCreationTest
+    public class CreationTest
     {
         SearchTree searchTree;
 

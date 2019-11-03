@@ -3,7 +3,7 @@ using CSharpDataStructures;
 
 namespace Tests.Concretes
 {
-    class SearchTreeDeleteTest
+    class DeleteTest
     {
         SearchTree searchTree;
         int firstKey;

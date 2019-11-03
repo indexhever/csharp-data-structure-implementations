@@ -1,45 +1,24 @@
 ﻿using NUnit.Framework;
 using CSharpDataStructures;
-using System;
 
-namespace Tests.Generics
+namespace Tests.Concretes
 {
-    class GenericSearchTreeFindWithAllTypesOfKeyTest
+    public class FindTest
     {
-        class Wallet : IComparable<Wallet>
-        {
-            private double money;
-
-            public Wallet(float money)
-            {
-                this.money = money;
-            }
-
-            public int CompareTo(Wallet other)
-            {
-                if (money < other.money)
-                    return -1;
-                if (money > other.money)
-                    return 1;
-
-                return 0;
-            }
-        }
-
-        SearchTree<Wallet, int> searchTree;
-        Wallet firstKey;
+        SearchTree searchTree;
+        int firstKey;
         int firstData;
-        Wallet secondKey;
+        int secondKey;
         int secondData;
 
         [SetUp]
         public void Setup()
         {
-            searchTree = new SearchTree<Wallet, int>();
-            firstKey = new Wallet(2);
+            firstKey = 2;
             firstData = 2;
-            secondKey = new Wallet(1);
+            secondKey = 1;
             secondData = 4;
+            searchTree = new SearchTree();
             searchTree.Insert(firstKey, firstData);
             searchTree.Insert(secondKey, secondData);
         }
@@ -47,7 +26,7 @@ namespace Tests.Generics
         [Test]
         public void FindKeyWhichExistsTest()
         {
-            DataNode<Wallet, int> dataFound = searchTree.Find(firstKey);
+            DataNode dataFound = searchTree.Find(firstKey);
 
             Assert.IsNotNull(dataFound);
             Assert.AreEqual(firstData, dataFound.Data);
@@ -56,9 +35,9 @@ namespace Tests.Generics
         [Test]
         public void FindKeyWhichDoesNotExistsTest()
         {
-            Wallet searchedKey = new Wallet(10);
+            int searchedKey = 10;
 
-            DataNode<Wallet, int> dataFound = searchTree.Find(searchedKey);
+            DataNode dataFound = searchTree.Find(searchedKey);
 
             Assert.IsNull(dataFound);
         }
@@ -66,8 +45,8 @@ namespace Tests.Generics
         [Test]
         public void FindTwoKeysTest()
         {
-            DataNode<Wallet, int> firstDataFound = searchTree.Find(firstKey);
-            DataNode<Wallet, int> secondDataFound = searchTree.Find(secondKey);
+            DataNode firstDataFound = searchTree.Find(firstKey);
+            DataNode secondDataFound = searchTree.Find(secondKey);
 
             Assert.IsNotNull(firstDataFound);
             Assert.IsNotNull(secondDataFound);
@@ -78,11 +57,11 @@ namespace Tests.Generics
         [Test]
         public void FindNewKeyTest()
         {
-            Wallet newKey = new Wallet(7);
+            int newKey = 7;
             int newData = 9;
 
             int isNewKeyInsertedCorrectly = searchTree.Insert(newKey, newData);
-            DataNode<Wallet, int> dataFound = searchTree.Find(newKey);
+            DataNode dataFound = searchTree.Find(newKey);
 
             Assert.Zero(isNewKeyInsertedCorrectly);
             Assert.IsNotNull(dataFound);

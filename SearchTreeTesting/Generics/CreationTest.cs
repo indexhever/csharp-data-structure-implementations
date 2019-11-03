@@ -3,7 +3,7 @@ using CSharpDataStructures;
 
 namespace Tests.Generics
 {
-    class GenericSearchTreeCreationTest
+    class CreationTest
     {
         [Test]
         public void CreateKeyNodeTest()
